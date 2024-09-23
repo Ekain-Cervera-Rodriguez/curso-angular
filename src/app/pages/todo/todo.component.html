@@ -12,13 +12,26 @@
         </div>
         <div class="card-content pills-container">
             <p>Estado: 
-                <span
-                    class="status"
-                    [ngStyle]="{'background-color': todoData.color.status}"
-                >
+                @if(todoData.class.status === 'to-do'){
+                    <span
+                        class="status to-do"
+                    >
                         {{todoData.status}}
-                </span>
-                
+                    </span>
+                }@else if(todoData.class.status === 'in-progress'){
+                    <span
+                        class="status in-progress"
+                    >
+                        {{todoData.status}}
+                    </span>
+                }
+                @else{
+                    <span
+                        class="status"
+                    >
+                        {{todoData.status}}
+                    </span>
+                }
             </p>
             <p>Prioridad:
                 <span
