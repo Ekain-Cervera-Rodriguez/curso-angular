@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, OutputEmitterRef} from '@angular/core';
+import { Component, EventEmitter, input, Input, Output, OutputEmitterRef} from '@angular/core';
 import { NTodo } from '../../models/todo.model';
 import { CommonModule } from '@angular/common';
 
@@ -11,5 +11,14 @@ import { CommonModule } from '@angular/common';
 })
 export class TodoComponent {
   @Input({required: true}) todoData!: NTodo.TodoData;
+
+  @Input() first!: boolean;
+
+  @Input() last!: boolean;
+
+  @Input() odd!: boolean;
+
+  @Input() even!: boolean;
+
   @Output() onClickIcon = new EventEmitter<NTodo.TodoData>();
 }

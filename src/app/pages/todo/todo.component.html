@@ -1,5 +1,6 @@
 <div
     class="card-container"
+    [ngClass]="{'first': first, 'last': last, 'odd': odd, 'even': even,}"
 >
     @if (todoData) {
         <span class="icon-close" (click)="onClickIcon.emit(todoData)">x</span>
@@ -13,6 +14,7 @@
             <p>Estado: 
                 <span
                     class="status"
+                    [ngStyle]="{'background-color': todoData.color.status}"
                 >
                         {{todoData.status}}
                 </span>
@@ -21,6 +23,7 @@
             <p>Prioridad:
                 <span
                     class="priority"
+                    [ngStyle]="{'background-color': todoData.color.priority}"
                 >
                 {{todoData.priority}}
                 </span>
