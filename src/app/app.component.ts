@@ -1,39 +1,54 @@
-import { Component, LOCALE_ID } from '@angular/core';
+import { Component, ElementRef, QueryList, viewChild, ViewChildren, viewChildren } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { TodoComponent } from './pages/todo/todo.component';
-import { TODO_DATA } from  '../assets/todo';
+import { TODO_DATA } from '../assets/todo';
 import { NTodo } from './models/todo.model';
-import { CommonModule, registerLocaleData } from '@angular/common';
-import es from '@angular/common/locales/es';
+import { CommonModule } from '@angular/common';
 
-registerLocaleData(es);
- 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [
-    RouterOutlet, 
+    RouterOutlet,
     TodoComponent,
     CommonModule
   ],
-  providers:[{provide: LOCALE_ID, useValue: 'es'}],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  todoData = TODO_DATA;
+  todoData = TODO_DATA.filter(item => item.id < 2);
 
-  constructor() {}
+  //@viewChild('todoRef', {read : ElementRef}) todo?: ElementRef;
 
-  getTodoInfo(vaL: NTodo.TodoData) {
-    console.log(vaL);
+  @ViewChildren('todoRef', {read: ElementRef}) todo?: QueryList<ElementRef>;
+
+
+  constructor() {
+    //console.log(this.todo?.priority);
   }
 
-  trackByFn(_index: number, item: NTodo.TodoData){
+  getTodoInfo(val: NTodo.TodoData) {
+    console.log(val);
+  }
+
+  trackByFn(_index: number, item: NTodo.TodoData) {
     return item.id;
   }
-  
-  orderData(){
-    this.todoData.sort((a, b) => a.priority - b.priority);
+
+  orderData() {
+    this.todoData.sort((a, b) => a.priority -  b.priority);
+  }
+
+  selectTodo(){
+    console.log(this.todo);
+   /*this.todo?.changes.suscribe(value s => {
+    console.log(values);
+   })*/
+  }
+
+  addTodo(){
+    this.todoData = TODO_DATA.filter(item => item.id < 4);
+
   }
 }
