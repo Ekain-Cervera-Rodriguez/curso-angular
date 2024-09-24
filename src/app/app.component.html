@@ -1,26 +1,48 @@
 <div class="todo-container">
-    @for(
-        todo of todoData;
-        track todo.id;
-        let f = $first;
-        let l = $last; 
-        let odd = $odd; 
-        let even = $even;
-     ){
-        <app-todo 
-
-        [todoData]="todo" 
-        [first]="f"
-        [last]="l"
-        [odd]="odd"
-        [even]="even"
-        (onClickIcon)="getTodoInfo($event)"
+    @for (
+            todo of todoData;
+            track todo.id;
+        ) {
+        <app-todo
+            #todoRef
+            [todoData]="todo"
+            (onClickIcon)="getTodoInfo($event)"
         >
-    </app-todo>
-    }@empty {
+        </app-todo>
+
+        <app-todo
+            #todoRef
+            [todoData]="todo"
+            (onClickIcon)="getTodoInfo($event)"
+        >
+        </app-todo>
+
+        <app-todo
+            #todoRef
+            [todoData]="todo"
+            (onClickIcon)="getTodoInfo($event)"
+        >
+        <div class="name" #inputRef>
+            <input type="text" placeholder="Nombre">
+        </div>
+
+        <div class="name" #inputRef>
+            <input type="text" placeholder="Apellidos">
+        </div>
+
+        <div class="name" #inputRef>
+            <input type="number" placeholder="Edad">
+        </div>
+
+        <div class="coment" style="margin-top: 1rem;">
+            <textarea rows="5"></textarea>
+        </div>
+        </app-todo>
+    } @empty {
         No hay datos
     }
-
 </div>
-
+<br><br>
 <button (click)="orderData()">Ordenar</button>
+<button (click)="addTodo()">Agregar</button>
+<button (click)="selectTodo()">Seleccionar todo</button>

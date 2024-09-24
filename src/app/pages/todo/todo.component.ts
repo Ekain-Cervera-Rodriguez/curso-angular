@@ -1,56 +1,62 @@
-import { Component, EventEmitter, input, Input, Output, OutputEmitterRef} from '@angular/core';
+import { Component, ContentChild, ContentChildren, ElementRef, EventEmitter, Input, LOCALE_ID, Output, ViewChild, ViewChildren } from '@angular/core';
 import { NTodo } from '../../models/todo.model';
-import { CommonModule } from '@angular/common';
+import { CommonModule, registerLocaleData } from '@angular/common';
+import spanish from '@angular/common/locales/es';
+registerLocaleData(spanish);
 
 @Component({
   selector: 'app-todo',
   standalone: true,
-  imports: [CommonModule],
+  imports: [
+    CommonModule
+  ],
+  providers:[
+    {
+      provide: LOCALE_ID, useValue: 'es'
+    }
+  ],
   templateUrl: './todo.component.html',
   styleUrl: './todo.component.css'
 })
 export class TodoComponent {
-  @Input({required: true}) todoData!: NTodo.TodoData;
-
-  @Input() first!: boolean;
-
-  @Input() last!: boolean;
-
-  @Input() odd!: boolean;
-
-  @Input() even!: boolean;
+  @Input({ required: true}) todoData!: NTodo.TodoData;
 
   @Output() onClickIcon = new EventEmitter<NTodo.TodoData>();
 
+  @ContentChildren('inputRef') projectedContent?: ElementRef<HTMLElement>;
+
+
   get priority(): string {
-    switch(this.todoData.priority){
+    switch (this.todoData.priority) {
       case NTodo.Priority.LOW:
-
-      return NTodo.PriorityText.LOW;
-
+        
+        return NTodo.PriorityText.LOW;
+    
       case NTodo.Priority.MEDIUM:
-
-      return NTodo.PriorityText.MEDIUM;
-
+        
+        return NTodo.PriorityText.MEDIUM;
+    
       default:
-
-      return NTodo.PriorityText.HIGH;
-
-
+        return NTodo.PriorityText.HIGH;
     }
-
+    
   }
-  
-  get progress(){
+
+  get progress() {
     return this.todoData.progress * 100;
   }
 
-  get range(){
-    if(this.progress >= 0 && this.progress <= NTodo.Range.LOW){
-      return NTodo.RangeText.LOW
-    }else if(this.progress > NTodo.Range.LOW && this.progress <= NTodo.Range.MEDIUM){
+  get range() {
+    if (this.progress >= 0 && this.progress <= NTodo.Range.LOW) {
+      return NTodo.RangeText.LOW;
+    } else if (this.progress > NTodo.Range.LOW && this.progress <= NTodo.Range.MEDIUM) {
       return NTodo.RangeText.MEDIUM;
     }
+
     return NTodo.RangeText.HIGH;
   }
+  selectContent(){
+    console.log(this.projectedContent);
+  }
+  
 }
