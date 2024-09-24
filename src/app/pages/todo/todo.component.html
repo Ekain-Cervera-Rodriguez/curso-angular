@@ -11,44 +11,31 @@
             </div>
         </div>
         <div class="card-content pills-container">
-            <p>Estado: 
-                @if(todoData.class.status === 'to-do'){
-                    <span
-                        class="status to-do"
+            <p>Estado:
+                <span
+                    class="status to-do"
+                    [ngClass]="todoData.class.status"
                     >
-                        {{todoData.status}}
-                    </span>
-                }@else if(todoData.class.status === 'in-progress'){
-                    <span
-                        class="status in-progress"
-                    >
-                        {{todoData.status}}
-                    </span>
-                }
-                @else{
-                    <span
-                        class="status"
-                    >
-                        {{todoData.status}}
-                    </span>
-                }
+                    {{todoData.status}}
+                </span>
+
             </p>
             <p>Prioridad:
                 <span
                     class="priority"
-                    [ngStyle]="{'background-color': todoData.color.priority}"
+                    [ngClass]="todoData.class.priority"
                 >
-                {{todoData.priority}}
+                    {{priority}}
                 </span>
             </p>
-            <p>Fecha límite: {{todoData.deadLine}}</p>
+            <p>Fecha límite: {{todoData.deadLine | date: 'YY/MM/DD'}}</p>
         </div>
         <section class="progressbar-container">
-            <div class="progressbar">
-                <div class="progressbar__fill">
+            <div class="progressbar" [attr.data-progress-range]="range">
+                <div class="progressbar__fill" [ngStyle]="{'width': progress + '%'}">
                 </div>
             </div>
-            <span>{{todoData.progress}} %</span> 
+            <span>{{todoData.progress | percent}}</span> 
         </section>
     } @else {
         No hay datos
